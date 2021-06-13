@@ -1,5 +1,22 @@
 <% if logged_in? %>
-  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+  <div class="row">
+    <aside class="col-sm-4">
+      <%= form_with(model: @task, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.label :content %>
+          <%= f.text_area :content, class: "form-control", rows: 5 %>
+        </div>
+        <div class="form-group">
+          <%= f.label :status %>
+          <%= f.text_field :status, class: "form-control" %>
+        </div>
+        <%= f.submit "Save", class: "btn btn-primary btn-block" %>
+      <% end %>
+    </aside>
+    <div class="col-sm-8">
+      <%= render "tasks/tasks", tasks: @tasks %>
+    </div>
+  </div>
 <% else %>
   <div class="center junbotron">
     <div class="text-center">
