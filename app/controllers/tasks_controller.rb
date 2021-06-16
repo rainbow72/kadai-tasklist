@@ -6,17 +6,14 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_user.tasks.find_by(params[:id])
-    if nil_task?
+    @task = current_user.tasks.find_by(id: params[:id])
+    if @task === nil
       redirect_to root_url
     end
   end
 
   def new
     @task = current_user.tasks.build
-    if nil_task?
-      redirect_to root_url
-    end
   end
 
   def create
@@ -31,18 +28,18 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_user.tasks.find_by(params[:id])
-    if nil_task?
+    @task = current_user.tasks.find_by(id: params[:id])
+    if @task === nil
       redirect_to root_url
     end
   end
 
   def update
-    @task = current_user.tasks.find_by(params[:id])
-    if nil_task?
+    @task = current_user.tasks.find_by(id: params[:id])
+    if @task === nil
       redirect_to root_url
     end
-    
+
     if @task.update(task_params)
       flash[:success] = "タスクが正常に更新されました"
       redirect_to task_path(@task)
@@ -53,8 +50,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = current_user.tasks.find_by(params[:id])
-    if nil_task?
+    @task = current_user.tasks.find_by(id: params[:id])
+    if @task === nil
       redirect_to root_url
     end
     @task.destroy
@@ -67,14 +64,6 @@ class TasksController < ApplicationController
   
   def task_params
     params.require(:task).permit(:content, :status)
-  end
-  
-  def nil_task?
-    if @task === nil
-      return true
-    else
-      return false
-    end
   end
 
 end
