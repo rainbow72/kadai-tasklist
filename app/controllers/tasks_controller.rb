@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
+
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.order(id: :desc)
   end
 
   def show
@@ -52,4 +53,5 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:content, :status)
   end
+
 end

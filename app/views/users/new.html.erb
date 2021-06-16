@@ -1,0 +1,16 @@
+<%= form_with(model: user, local: true) do |f| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.label :name, "タスク" %>
+  <%= f.text_field :name %>
+  <%= f.label :email, "ステータス" %>
+  <%= f.text_field :email %>
+  <%= f.submit "Sign up" %>
+<% end %>
