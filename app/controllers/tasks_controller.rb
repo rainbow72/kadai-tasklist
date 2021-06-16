@@ -70,7 +70,11 @@ class TasksController < ApplicationController
   end
   
   def nil_task?
-    return !@task
+    if @task === nil
+      return true
+    else
+      return false
+    end
   end
 
 end
