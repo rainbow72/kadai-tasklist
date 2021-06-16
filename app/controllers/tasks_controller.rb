@@ -1,15 +1,12 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
+  before_action :task_find_by, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = current_user.tasks.order(id: :desc)
   end
 
   def show
-    @task = current_user.tasks.find_by(id: params[:id])
-    if @task === nil
-      redirect_to root_url
-    end
   end
 
   def new
@@ -28,18 +25,9 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_user.tasks.find_by(id: params[:id])
-    if @task === nil
-      redirect_to root_url
-    end
   end
 
   def update
-    @task = current_user.tasks.find_by(id: params[:id])
-    if @task === nil
-      redirect_to root_url
-    end
-
     if @task.update(task_params)
       flash[:success] = "タスクが正常に更新されました"
       redirect_to task_path(@task)
@@ -50,10 +38,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = current_user.tasks.find_by(id: params[:id])
-    if @task === nil
-      redirect_to root_url
-    end
     @task.destroy
     
     flash[:success] = "タスクは正常に削除されました"
